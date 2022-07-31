@@ -7,11 +7,7 @@
       "operating_radius_latitude": 10.5,
       "operating_radius_longitude": 4.5,
       "rating": 1,
-      "experienced_in": {
-        "wood": 1,
-        "tiles": 0,
-        "carpet": 0
-      }
+      "experienced_in": "wood"
     },
     {
       "name":  "partner2",
@@ -20,11 +16,7 @@
       "operating_radius_latitude": 7.5,
       "operating_radius_longitude": 2.5,
       "rating": 2,
-      "experienced_in": {
-        "tiles": 1,
-        "wood": 0,
-        "flooring": 0
-      }
+      "experienced_in": "tiles"
     },
     {
       "name":  "partner3",
@@ -33,11 +25,7 @@
       "operating_radius_latitude": 105.5,
       "operating_radius_longitude": 28.5,
       "rating": 3,
-      "experienced_in": {
-        "flooring": 1,
-        "wood": 1,
-        "carpet": 0
-      }
+      "experienced_in": "tiles,wood"
     },
     {
       "name":  "partner4",
@@ -46,11 +34,7 @@
       "operating_radius_latitude": 125.5,
       "operating_radius_longitude": 55.5,
       "rating": 4,
-      "experienced_in": {
-        "wood": 1,
-        "tiles": 1,
-        "carpet": 0
-      }
+      "experienced_in": "wood,carpet"
     },
     {
       "name":  "partner5",
@@ -59,11 +43,7 @@
       "operating_radius_latitude": 7.5,
       "operating_radius_longitude": 2.5,
       "rating": 5,
-      "experienced_in": {
-        "wood": 1,
-        "tiles": 1,
-        "carpet": 1
-      }
+      "experienced_in": "wood,tiles,carpet"
     }
   ]
 }

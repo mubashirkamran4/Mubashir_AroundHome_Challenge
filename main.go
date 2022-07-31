@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"github.com/gorilla/mux"
+	"strings"
 )
 
 type Partners struct {
@@ -16,7 +17,7 @@ type Partners struct {
 
 type Partner struct {
 	Name   string `json:"name"`
-	Experienced_in experienced_in `json:"experienced_in"`
+	Experienced_in string `json:"experienced_in"`
 	Latitude   float32 `json:"latitude"`
 	Longitude    float32    `json:"longitude"`
 	Operating_radius_latitude float32 `json:"operating_radius_latitude"`
@@ -24,13 +25,13 @@ type Partner struct {
 	Rating int `json:"rating"`
 }
 
-// Social struct which contains a
-// list of links
-type experienced_in struct {
-	Wood int `json:"wood"`
-	Tiles int `json:"tiles"`
-	Carpet int `json:"carpet"`
-}
+//// Social struct which contains a
+//// list of links
+//type experienced_in struct {
+//	Wood int `json:"wood"`
+//	Tiles int `json:"tiles"`
+//	Carpet int `json:"carpet"`
+//}
 
 type crequest struct {
 	Material string `json:"material"`
@@ -40,6 +41,15 @@ type crequest struct {
 	PhoneNumber string `json:"phonenumber"`
 
 }
+
+// Abs returns the absolute value of x.
+func Abs(x float32) float32 {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
 
 func getOnePartner(w http.ResponseWriter, r *http.Request) {
 	partnerName := mux.Vars(r)["name"]
@@ -65,12 +75,7 @@ func getOnePartner(w http.ResponseWriter, r *http.Request) {
 }
 
 func returnPartners(w http.ResponseWriter, r *http.Request) {
-	reqBody, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		fmt.Fprintf(w, "Kindly enter correct data to get matched with partners")
-	}
-	var customerRequest crequest
-	json.Unmarshal(reqBody, &customerRequest)
+
 	// Open our jsonFile
 	jsonFile, err := os.Open("./partners.json")
 	// if we os.Open returns an error then handle it
@@ -81,14 +86,37 @@ func returnPartners(w http.ResponseWriter, r *http.Request) {
 	byteValue,_ := ioutil.ReadAll(jsonFile)
 
 	var partners Partners
-
 	json.Unmarshal(byteValue, &partners)
+
+	var matched_partners []Partner
+
+	reqBody, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "Kindly enter correct data to get matched with partners")
+	}
+	var customerRequest crequest
+
+	json.Unmarshal(reqBody, &customerRequest)
+	fmt.Println("customer latitude")
+	fmt.Println(customerRequest)
+
 	for i := 0; i < len(partners.Partners); i++ {
-		if customerRequest.Material == partners.Partners[i].Name{
-			json.NewEncoder(w).Encode(partners.Partners[i])
+		experiences := strings.Split(partners.Partners[i].Experienced_in, ",")
+		for _, exp := range experiences {
+			if exp == customerRequest.Material {
+					var customerLat = customerRequest.Clatitude
+					var customerLon = customerRequest.Clongitude
+					var partnerLat = partners.Partners[i].Latitude
+					var partnerLon = partners.Partners[i].Longitude
+					if (Abs(customerLat - partnerLat) <= partners.Partners[i].Operating_radius_latitude) && (Abs(customerLon - partnerLon) <= partners.Partners[i].Operating_radius_longitude){
+						matched_partners = append(matched_partners, partners.Partners[i])
+					}
+			}
 		}
 	}
+	
 
+	json.NewEncoder(w).Encode(matched_partners)
 }
 
 func main() {
