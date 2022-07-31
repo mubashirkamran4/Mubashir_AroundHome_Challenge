@@ -66,7 +66,6 @@ func getOnePartner(w http.ResponseWriter, r *http.Request) {
 
 	json.Unmarshal(byteValue, &partners)
 
-
 	for i := 0; i < len(partners.Partners); i++ {
 		if partnerName == partners.Partners[i].Name{
 			json.NewEncoder(w).Encode(partners.Partners[i])
@@ -114,7 +113,37 @@ func returnPartners(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-	
+
+	//sort partners based on rating
+	for i := 0; i < len(matched_partners); i++ {
+		for i := 0; i < len(matched_partners); i++ {
+			if i == len(matched_partners) - 1{
+				continue
+			}
+			if matched_partners[i].Rating < matched_partners[i+1].Rating {
+				temp_partner := matched_partners[i]
+				matched_partners[i] = matched_partners[i+1]
+				matched_partners[i+1] = temp_partner
+			}
+		}
+	}
+
+	//sort partners based on radius
+	for i := 0; i < len(matched_partners); i++ {
+		for i := 0; i < len(matched_partners); i++ {
+			if i == len(matched_partners) - 1{
+				continue
+			}
+			var customerLat = customerRequest.Clatitude
+			var customerLon = customerRequest.Clongitude
+			if (Abs(customerLat - matched_partners[i].Latitude) > Abs(customerLat - matched_partners[i+1].Latitude)) &&
+				(Abs(customerLon - matched_partners[i].Longitude) > Abs(customerLon - matched_partners[i+1].Longitude)){
+				temp_partner := matched_partners[i]
+				matched_partners[i] = matched_partners[i+1]
+				matched_partners[i+1] = temp_partner
+			}
+		}
+	}
 
 	json.NewEncoder(w).Encode(matched_partners)
 }
