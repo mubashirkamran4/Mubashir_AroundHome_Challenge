@@ -52,12 +52,12 @@ Paste the following Parmeters:
 
 ```
 {
-"Clatitude": 24.5,
-"Material": "wood",
-"Clatitude": 24.5,
-"Clongitude": 21.5,
-"PhoneNumber": "+49122225869",
-"SquareMetres": 12.3
+   "Clatitude": 24.5,
+   "Material": "wood",
+   "Clatitude": 24.5,
+   "Clongitude": 21.5,
+   "PhoneNumber": "+49122225869",
+   "SquareMetres": 12.3
 }
 ```
 Hit Send and you should get the following repsonse as JSON:
