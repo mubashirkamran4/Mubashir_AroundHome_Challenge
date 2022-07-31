@@ -15,7 +15,15 @@ go via json file "`partners.json`" placed in main project directory that contain
 test the two required API endpoints.
 
 As it was my first ever project in Go so please do expect certain bad coding styles or slow approaches.
-The file `main.go` contains all the relevant code for handling the requests
+The file `main.go` contains all the relevant code for handling the requests.
+
+Some Resources I used to get idea from, to write the code:
+
+https://tutorialedge.net/golang/parsing-json-with-golang/
+
+https://andela.com/insights/using-golang-to-create-a-restful-json-api/
+
+
 
 ## How to run
 
