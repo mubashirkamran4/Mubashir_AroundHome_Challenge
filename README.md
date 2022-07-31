@@ -1,1 +1,115 @@
 # Mubashir_AroundHome_Challenge
+
+
+## Prerequisites
+
+You should have the following go version installed as the project was developed using the following version.
+
+* go version go1.14 darwin/amd64
+* Postman
+
+## Things to Note
+
+I tried to import some seed data via script in mysql database but as there were some problems faced so decided to
+go via json file "`partners.json`" placed in main project directory that contains some partners sample data to run and
+test the two required API endpoints.
+
+As it was my first ever project in Go so please do expect certain bad coding styles or slow approaches.
+The file `main.go` contains all the relevant code for handling the requests
+
+## How to run
+
+Open the terminal and change to location where you want to clone the project. Clone the project using ssh via command:
+
+`git clone git@github.com:mubashirkamran4/Mubashir_AroundHome_Challenge.git`
+
+Go to project directory:
+
+`cd Mubashir_AroundHome_Challenge`
+
+Fire up the go server via:
+
+`go run main.go`
+
+This should start the server listening on 8080.
+
+### Get Matching Partners based on Customer Request
+
+Open Postman, select `GET` request in the Request mehtod and Enter the following URL:
+
+[http://localhost:8080/match_partners](http://localhost:8080/match_partners)
+
+Under the Request URL, Select `Body` tab and click "`raw`" and select `JSON` in the drop down for the datatype:
+Paste the following Parmeters:
+
+```
+{
+"Clatitude": 24.5,
+"Material": "wood",
+"Clatitude": 24.5,
+"Clongitude": 21.5,
+"PhoneNumber": "+49122225869",
+"SquareMetres": 12.3
+}
+```
+Hit Send and you should get the following repsonse as JSON:
+
+```
+[
+   {
+      "name":"partner4",
+      "experienced_in":"wood,carpet",
+      "latitude":68.9,
+      "longitude":2.2,
+      "operating_radius_latitude":125.5,
+      "operating_radius_longitude":55.5,
+      "rating":4
+   },
+   {
+      "name":"partner3",
+      "experienced_in":"tiles,wood",
+      "latitude":67.9,
+      "longitude":1.6,
+      "operating_radius_latitude":105.5,
+      "operating_radius_longitude":28.5,
+      "rating":3
+   }
+]
+```
+We should be able to see that only the partners with "wood" in their experiences list and customer being within their operating
+radius are displayed. For calculating the operating radius, I am assuming the following formula:
+  
+ `(Partners's Latitude and Longitude)` `-` `(Customer's Latitude and Longitude)` should be <=
+   ` Operating Radius Latitude and Longitude` of Partner.
+
+
+The partners are first sorted based on rating and then based on their distance from customer's address. For sorting based
+on distance I am assuming the following formula:
+
+`(Partners's Latitude and Longitude)` `-` `(Customer's Latitude and Longitude)`. The least values of both latitude and longitude
+in this difference should come first in the list.
+
+
+
+### Get Specific Partner based on Name
+
+Open Postman, select `GET` request in the Request mehtod and Enter the following URL:
+
+[http://localhost:8080/get_partner/partner3](http://localhost:8080/get_partner/partner3)
+
+Here `partner3` implies the name of any partner from the partners list we got as a response to previous request.
+
+Hit Enter and you should get the following response mentioning the details of specific partner:
+```
+{
+    "name":"partner3",
+    "experienced_in":"tiles,wood",
+    "latitude":67.9,
+    "longitude":1.6,
+    "operating_radius_latitude":105.5,
+    "operating_radius_longitude":28.5,
+    "rating":3
+}
+```
+
+
