@@ -25,8 +25,11 @@ project.
 ● The customer is within the operating radius of the partner.The data in the request from the customer is:
 
    ● Material for the floor (wood, carpet, tiles)
+   
    ● Address (assume that this is the lat/long of the house)
+   
    ● Square meters of the floor
+   
    ● Phone number (for the partner to contact the customer)
 
 The structure of the partner data is as follows:
