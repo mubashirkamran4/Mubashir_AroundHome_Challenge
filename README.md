@@ -11,6 +11,7 @@ partner based on the details of a customer's flooring project.
 Your Task
 
 Your task is to write an API that offers the following functionality:
+
 ● Based on a customer-request, return a list of partners that offer the service. The list
 should be sorted by “best match”. The quality of the match is determined first on
 average rating and second by distance to the customer.
